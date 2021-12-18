@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "BallBearing.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 #include "PlayerBallBearing.generated.h"
 
 /**
@@ -18,6 +20,14 @@ public:
 
 	// Sets default values for this pawn's properties.
 	APlayerBallBearing();
+
+	// Spring arm for positioning the camera above the ball bearing.
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = BallBearing)
+		USpringArmComponent* SpringArm = nullptr;
+
+	// Camera to view the ball bearing.
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = BallBearing)
+		UCameraComponent* Camera = nullptr;
 
 	// How much force to use to push the ball bearing around.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = BallBearing)
@@ -34,6 +44,7 @@ public:
 	// The maximum speed in meters per second.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = BallBearing)
 		float MaximumSpeed = 4.0f;
+
 protected:
 
 	// Control the movement of the ball bearing, called every frame.

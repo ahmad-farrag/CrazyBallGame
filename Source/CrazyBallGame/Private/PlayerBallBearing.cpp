@@ -7,6 +7,27 @@
 
 APlayerBallBearing::APlayerBallBearing()
 {
+	// Create a spring-arm attached to the ball mesh.
+
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+
+	SpringArm->bDoCollisionTest = false;
+	SpringArm->SetUsingAbsoluteRotation(true);
+	SpringArm->SetRelativeRotation(FRotator(-45.0f, 0.0f, 0.0f));
+	SpringArm->TargetArmLength = 1000.0f;
+	SpringArm->bEnableCameraLag = false;
+	SpringArm->CameraLagSpeed = 5.0f;
+
+	SpringArm->SetupAttachment(BallMesh);
+
+	// Create a camera and attach to the spring-arm.
+
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+
+	Camera->bUsePawnControlRotation = false;
+
+	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
+
 	Magnetized = false;
 }
 //Establish the default pawn input bindings for a PlayerBallBearing.
