@@ -25,6 +25,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = BallBearing)
 		bool Magnetized = true;
 
+	// Reset the location of the ball bearing to its initial location when spawned.
+	UFUNCTION(BlueprintCallable, Category = "Ball Bearing")
+		void ResetLocation() const
+	{
+		BallMesh->SetWorldLocation(InitialLocation + FVector(0.0f, 0.0f, 150.0f));
+		BallMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);
+		BallMesh->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
+	}
+
 protected:
 
 	// Called when the game starts or when spawned.
