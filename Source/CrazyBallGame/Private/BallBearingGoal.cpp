@@ -54,7 +54,6 @@ void ABallBearingGoal::Tick(float deltaSeconds)
 
 	// Now iterate around the proximate ball bearings and draw them towards our center
 	// using physics forces scaled by magnetism and distance from the center.
-
 	for (ABallBearing* ballBearing : BallBearings)
 	{
 		FVector difference = ourLocation - ballBearing->GetActorLocation();
@@ -99,3 +98,21 @@ void ABallBearingGoal::NotifyActorEndOverlap(AActor* otherActor)
 }
 
 
+//Does this goal have a ball bearing resting in its center ?
+bool ABallBearingGoal::HasBallBearing() const
+{
+	FVector ourLocation = GetActorLocation();
+
+	for (const ABallBearing* ballBearing : BallBearings)
+	{
+		FVector difference = ourLocation - ballBearing->GetActorLocation();
+		float distance = difference.Size();
+
+		if (distance < 75.0f)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
